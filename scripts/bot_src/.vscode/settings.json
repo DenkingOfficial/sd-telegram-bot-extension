@@ -1,0 +1,15 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "../${workspaceFolder}"
+    },
+    "python.formatting.provider": "black",
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8CategorySeverity.E": "Warning",
+    "python.linting.flake8Args": ["--ignore=E501,E501,W503,E402"],
+    "flake8.args": ["--ignore=E203,E501,W503,E402"],
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.wordBasedSuggestions": false
+  }

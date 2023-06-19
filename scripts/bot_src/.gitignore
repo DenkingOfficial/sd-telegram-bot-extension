@@ -1,0 +1,13 @@
+secrets.json
+*.session-journal
+*.session
+*.journal
+output/*
+!output/txt2img
+output/txt2img/*
+!output/txt2img/Test
+**/__pycache__/
+venv/
+backup/
+scripts/consts.py
+scripts/oldoutpainting.py
