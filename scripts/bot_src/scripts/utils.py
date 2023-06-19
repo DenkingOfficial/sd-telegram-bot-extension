@@ -94,8 +94,8 @@ def generate_job_id(length):
 
 def add_to_queue(reply, queue, job_id, job_name, prompt, username, user_id):
     queue.append(job_id)
-    first_string = f"{job_name} image using prompt:\n**{prompt}**\n"
-    last_string = f"by [@{username}]"
+    first_string = f"{job_name} изображения:\n**{prompt}**\n"
+    last_string = f"От [@{username}]"
     job_index = queue.index(job_id)
     while queue[0] != job_id:
         prev_index = job_index
@@ -105,7 +105,7 @@ def add_to_queue(reply, queue, job_id, job_name, prompt, username, user_id):
                 reply.edit_text(
                     text=f"{first_string}"
                     f"\n"
-                    f"Position in queue: {job_index} (Pending)\n"
+                    f"Позиция в очереди: {job_index} (Ожидает)\n"
                     f"\n"
                     f"{last_string}"
                     f"(tg://user?id={user_id})"
@@ -115,7 +115,7 @@ def add_to_queue(reply, queue, job_id, job_name, prompt, username, user_id):
     reply.edit_text(
         text=f"{first_string}"
         f"\n"
-        f"Position in queue: 0 (Processing)\n"
+        f"Позиция в очереди: 0 (В процессе)\n"
         f"\n"
         f"{last_string}"
         f"(tg://user?id={user_id})"
@@ -124,8 +124,8 @@ def add_to_queue(reply, queue, job_id, job_name, prompt, username, user_id):
 
 def add_to_queue_outpaint(reply, queue, job_id, message, guide_prompt):
     queue.append(job_id)
-    first_string = "Outpainting image\n"
-    last_string = f"by [@{message.from_user.username}]"
+    first_string = "Дорисовка изображения\n"
+    last_string = f"От [@{message.from_user.username}]"
     job_index = queue.index(job_id)
     while queue[0] != job_id:
         prev_index = job_index
@@ -135,11 +135,11 @@ def add_to_queue_outpaint(reply, queue, job_id, message, guide_prompt):
                 reply.edit_text(
                     text=f"{first_string}"
                     + (
-                        f"Guidance prompt: **{guide_prompt}**\n\n"
+                        f"Описание дорисовки: **{guide_prompt}**\n\n"
                         if guide_prompt
                         else "\n"
                     )
-                    + f"Position in queue: {job_index} (Pending)\n"
+                    + f"Позиция в очереди: {job_index} (Ожидает)\n"
                     + "\n"
                     + f"{last_string}"
                     + f"(tg://user?id={message.from_user.id})"
@@ -148,8 +148,8 @@ def add_to_queue_outpaint(reply, queue, job_id, message, guide_prompt):
                 pass
     reply.edit_text(
         text=f"{first_string}"
-        + (f"Guidance prompt: **{guide_prompt}**\n\n" if guide_prompt else "\n")
-        + "Position in queue: 0 (Processing)\n"
+        + (f"Описание дорисовки: **{guide_prompt}**\n\n" if guide_prompt else "\n")
+        + "Позиция в очереди: 0 (В процессе)\n"
         + "\n"
         + f"{last_string}"
         + f"(tg://user?id={message.from_user.id})"
@@ -158,8 +158,8 @@ def add_to_queue_outpaint(reply, queue, job_id, message, guide_prompt):
 
 def add_to_queue_redraw(reply, queue, job_id, message, prompt):
     queue.append(job_id)
-    first_string = "Redrawing image\n"
-    last_string = f"by [@{message.from_user.username}]"
+    first_string = "Перерисовка изображения\n"
+    last_string = f"От [@{message.from_user.username}]"
     job_index = queue.index(job_id)
     while queue[0] != job_id:
         prev_index = job_index
@@ -168,8 +168,8 @@ def add_to_queue_redraw(reply, queue, job_id, message, prompt):
             try:
                 reply.edit_text(
                     text=f"{first_string}"
-                    + f"Prompt: **{prompt}**\n\n"
-                    + f"Position in queue: {job_index} (Pending)\n"
+                    + f"Описание: **{prompt}**\n\n"
+                    + f"Позиция в очереди: {job_index} (Ожидает)\n"
                     + "\n"
                     + f"{last_string}"
                     + f"(tg://user?id={message.from_user.id})"
@@ -178,8 +178,8 @@ def add_to_queue_redraw(reply, queue, job_id, message, prompt):
                 pass
     reply.edit_text(
         text=f"{first_string}"
-        + f"Prompt: **{prompt}**\n\n"
-        + "Position in queue: 0 (Processing)\n"
+        + f"Описание: **{prompt}**\n\n"
+        + "Позиция в очереди: 0 (Processing)\n"
         + "\n"
         + f"{last_string}"
         + f"(tg://user?id={message.from_user.id})"
@@ -190,11 +190,11 @@ def reply_template(
     job_name, queue, user_info, variations=False, regenerate=False, upscale=False
 ):
     position = str(len(queue))
-    status = "(Pending)" if len(queue) > 0 else ""
+    status = "(Ожидает)" if len(queue) > 0 else ""
     caption = (
-        f"{job_name} image using prompt:\n**{user_info['orig_prompt']}**\n\n"
-        f"Position in queue: {position} {status}\n\n"
-        f"by [@{user_info['username']}](tg://user?id={user_info['user_id']})"
+        f"{job_name} изображения по описанию:\n**{user_info['orig_prompt']}**\n\n"
+        f"Позиция в очереди: {position} {status}\n\n"
+        f"От [@{user_info['username']}](tg://user?id={user_info['user_id']})"
     )
     reply = {
         "animation": f"{bot_static_files}/noise.gif",
@@ -207,12 +207,12 @@ def reply_template(
 
 def reply_outpaint_template(queue, message, guide_prompt):
     position = str(len(queue))
-    status = "(Pending)" if len(queue) > 0 else ""
+    status = "(Ожидает)" if len(queue) > 0 else ""
     caption = (
-        "Outpainting image\n"
-        + (f"Guidance prompt: **{guide_prompt}**\n\n" if guide_prompt else "\n")
-        + f"Position in queue: {position} {status}\n"
-        + f"by [@{message.from_user.username}](tg://user?id={message.from_user.id})"
+        "Дорисовка изображения\n"
+        + (f"Описание дорисовки: **{guide_prompt}**\n\n" if guide_prompt else "\n")
+        + f"Позиция в очереди: {position} {status}\n"
+        + f"От [@{message.from_user.username}](tg://user?id={message.from_user.id})"
     )
     reply = {
         "animation": f"{bot_static_files}/noise.gif",
@@ -224,12 +224,12 @@ def reply_outpaint_template(queue, message, guide_prompt):
 
 def reply_redraw_template(queue, message, prompt):
     position = str(len(queue))
-    status = "(Pending)" if len(queue) > 0 else ""
+    status = "(Ожидает)" if len(queue) > 0 else ""
     caption = (
-        "Redrawing image\n"
-        + f"Prompt: **{prompt}**\n\n"
-        + f"Position in queue: {position} {status}\n"
-        + f"by [@{message.from_user.username}](tg://user?id={message.from_user.id})"
+        "Перерисовка изображения\n"
+        + f"Описание: **{prompt}**\n\n"
+        + f"Позиция в очереди: {position} {status}\n"
+        + f"От [@{message.from_user.username}](tg://user?id={message.from_user.id})"
     )
     reply = {
         "animation": f"{bot_static_files}/noise.gif",

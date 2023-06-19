@@ -20,7 +20,7 @@ bot_txt2img_files = os.path.join(
 class Upscale:
     def __init__(self, queue):
         self.queue = queue
-        self.job_name = "Upscaling"
+        self.job_name = "Увеличение"
         self.job_id = None
         self.user_info = {}
         self.file_path = ""
@@ -85,18 +85,18 @@ class Upscale:
             reply.edit_media(
                 media=InputMediaPhoto(
                     media=f"{self.upscaled_file_path}",
-                    caption="Upscaled image\n"
+                    caption="Увеличенное изображение\n"
                     + "\n"
-                    + f"Prompt: **{self.user_info['orig_prompt']}**\n"
+                    + f"Описание: **{self.user_info['orig_prompt']}**\n"
                     + (
-                        f"Negative Prompt: **{self.user_info['negative_prompt']}**\n"
+                        f"Негативное описание: **{self.user_info['negative_prompt']}**\n"
                         if self.user_info["negative_prompt"]
                         else ""
                     )
                     + "\n"
-                    + f"**Upscaled by [@{call.from_user.username}]"
+                    + f"**Увеличено [@{call.from_user.username}]"
                     + f"(tg://user?id={call.from_user.id})**\n"
-                    + f"**Original Image by [@{self.user_info['username']}]"
+                    + f"**Оригинальное изображение от [@{self.user_info['username']}]"
                     + f"(tg://user?id={self.user_info['user_id']})**",
                 )
             )
@@ -104,18 +104,18 @@ class Upscale:
             reply.edit_media(
                 media=InputMediaDocument(
                     media=f"{self.upscaled_file_path}",
-                    caption="Upscaled image\n"
+                    caption="Увеличенное изображение\n"
                     + "\n"
-                    + f"Prompt: **{self.user_info['orig_prompt']}**\n"
+                    + f"Описание: **{self.user_info['orig_prompt']}**\n"
                     + (
-                        f"Negative Prompt: **{self.user_info['negative_prompt']}**\n"
+                        f"Негативное описание: **{self.user_info['negative_prompt']}**\n"
                         if self.user_info["negative_prompt"]
                         else ""
                     )
                     + "\n"
-                    + f"**Upscaled by [@{call.from_user.username}]"
+                    + f"**Увеличено [@{call.from_user.username}]"
                     + f"(tg://user?id={call.from_user.id})**\n"
-                    + f"**Original Image by [@{self.user_info['username']}]"
+                    + f"**Оригинальное изображение от [@{self.user_info['username']}]"
                     + f"(tg://user?id={self.user_info['user_id']})**",
                 )
             )
