@@ -6,7 +6,7 @@ from PIL import Image
 import requests
 from pyrogram import errors as pyrogram_errors
 from pyrogram.types import InputMediaPhoto, InputMediaDocument
-from scripts.consts import SD_URL
+from scripts.consts import SD_URL, OUTPAINT_HELP_TEXT
 import scripts.utils as utils
 
 bot_outpainting_files = os.path.join(
@@ -55,7 +55,7 @@ class Outpaint:
         if direction not in ["vertical", "horizontal"]:
             return False
 
-        amount = int(amount_match.group(2)) if amount_match else 20
+        amount = int(amount_match.group(2)) if amount_match else 50
         if not (1 <= amount <= 100):
             return False
 
@@ -167,9 +167,7 @@ class Outpaint:
         payload = self._outpaint_payload_former()
 
         if not payload:
-            self.message.reply(
-                "Please send an image with this command. Also check arguments"
-            )
+            self.message.reply(OUTPAINT_HELP_TEXT)
             return
 
         reply_message = utils.reply_outpaint_template(
